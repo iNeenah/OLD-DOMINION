@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Financiero - Old Dominion Freight Line</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #006400;
+            --primary-light: #4CAF50;
+            --primary-dark: #004d00;
+            --secondary: #FF6600;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .header-metrics {
+            display: flex;
+            gap: 30px;
+        }
+
+        .header-metric {
+            text-align: center;
+        }
+
+        .header-metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .header-metric-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .hero {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-text h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--gray);
+        }
+
+        .hero-image {
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            object-fit: cover;
+        }
+
+        .key-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            color: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 100, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 100, 0, 0.3);
+        }
+
+        .metric-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .section-badge {
+            background: var(--primary-light);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+
+        .chart-container.small {
+            height: 300px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        th {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) {
+            background: var(--light);
+        }
+
+        tr:hover {
+            background: #e8f5e9;
+        }
+
+        .highlight-row {
+            background: #e8f5e9 !important;
+            font-weight: 500;
+        }
+
+        .cost-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .cost-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid var(--primary);
+        }
+
+        .cost-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .cost-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cost-card h3 i {
+            color: var(--secondary);
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .cost-value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .interactive-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            color: var(--gray);
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            background: var(--light-gray);
+            border-radius: 10px;
+            height: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: var(--white);
+            font-weight: 600;
+            animation: grow 1.5s ease-out;
+        }
+
+        @keyframes grow {
+            from { width: 0; }
+        }
+
+        .image-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .image-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        .image-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .image-card:hover .image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .image-card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .image-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .image-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .image-fallback i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .conclusion-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .conclusion-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .conclusion-points {
+            list-style-type: none;
+        }
+
+        .conclusion-points li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .conclusion-points li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+
+        footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header-metrics {
+                width: 100%;
+                justify-content: space-around;
+            }
+            
+            .hero-text h2 {
+                font-size: 2rem;
+            }
+            
+            .key-metrics {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">OD</div>
+                <div class="logo-text">
+                    <h1>Old Dominion Freight Line</h1>
+                    <p>Informe Financiero 2024</p>
+                </div>
+            </div>
+            <div class="header-metrics">
+                <div class="header-metric">
+                    <div class="header-metric-value">72.0%</div>
+                    <div class="header-metric-label">Ratio Operativo</div>
+                </div>
+                <div class="header-metric">
+                    <div class="header-metric-value">$5.866B</div>
+                    <div class="header-metric-label">Ingresos</div>
+                </div>
+                <div class="header-metric">
+                    <div class="header-metric-value">$1.641B</div>
+                    <div class="header-metric-label">Utilidad Operativa</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Análisis Financiero Integral</h2>
+                    <p>Desglose detallado del presupuesto operativo de Old Dominion Freight Line basado en datos financieros públicos de 2024. Análisis de eficiencia operativa y distribución de gastos en áreas funcionales clave.</p>
+                    
+                    <div class="key-metrics">
+                        <div class="metric-card">
+                            <i class="fas fa-dollar-sign"></i>
+                            <div class="metric-value">$5,866M</div>
+                            <div class="metric-label">Ingresos Totales</div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div class="metric-value">72.0%</div>
+                            <div class="metric-label">Ratio Operativo</div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-coins"></i>
+                            <div class="metric-value">$1,641M</div>
+                            <div class="metric-label">Ingreso Operativo</div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <div class="metric-value">$4,223.5M</div>
+                            <div class="metric-label">Gastos Operativos</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1589302168068-9646067fd28a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Camión de Old Dominion Freight Line" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="image-fallback">
+                            <i class="fas fa-truck"></i>
+                            <h4>Camión de Old Dominion Freight Line</h4>
+                            <p>Flota moderna para transporte de carga</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-chart-bar"></i> Estado de Resultados Consolidado</h2>
+                <div class="section-badge">2024</div>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <canvas id="incomeChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="profitMarginChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concepto</th>
+                            <th>Monto (Millones USD)</th>
+                            <th>Porcentaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ingresos por Servicios LTL</td>
+                            <td>$5,866.0</td>
+                            <td>100.0%</td>
+                        </tr>
+                        <tr>
+                            <td>Menos: Gastos Operativos Totales</td>
+                            <td>($4,223.5)</td>
+                            <td>72.0%</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td>Utilidad Operativa (EBIT)</td>
+                            <td>$1,642.5</td>
+                            <td>28.0%</td>
+                        </tr>
+                        <tr>
+                            <td>Menos: Gastos no Operativos</td>
+                            <td>($40.0)</td>
+                            <td>0.7%</td>
+                        </tr>
+                        <tr>
+                            <td>Menos: Impuesto sobre la Renta (22.7%)</td>
+                            <td>($363.8)</td>
+                            <td>6.2%</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td>Utilidad Neta</td>
+                            <td>$1,238.7</td>
+                            <td>21.1%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-map-marked-alt"></i> Cobertura Nacional y Servicios</h2>
+                <div class="section-badge">Red Operativa</div>
+            </div>
+            
+            <div class="image-section">
+                <div class="image-card">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1574717024453-354056aafa98?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Mapa de centros de servicio" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="image-fallback">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <h4>Red Nacional de 261 Centros de Servicio</h4>
+                            <p>Cobertura completa en Estados Unidos</p>
+                        </div>
+                    </div>
+                    <div class="image-card-content">
+                        <h3>Red Nacional de 261 Centros de Servicio</h3>
+                        <p>Cobertura completa en Estados Unidos con centros estratégicamente ubicados para optimizar las operaciones de transporte.</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1556740758-6a5edc603a25?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Tabla de servicios" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="image-fallback">
+                            <i class="fas fa-table"></i>
+                            <h4>Portafolio Integral de Servicios LTL</h4>
+                            <p>Múltiples opciones de servicio para clientes</p>
+                        </div>
+                    </div>
+                    <div class="image-card-content">
+                        <h3>Portafolio Integral de Servicios LTL</h3>
+                        <p>Ofrecemos soluciones de transporte adaptadas a las necesidades específicas de cada cliente con múltiples opciones de servicio.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="serviceMetricsChart"></canvas>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-cogs"></i> Desglose de Gastos Operativos</h2>
+                <div class="section-badge">$4,223.5M</div>
+            </div>
+            
+            <div class="interactive-tabs">
+                <div class="tab active" onclick="openTab(event, 'overview')">Vista General</div>
+                <div class="tab" onclick="openTab(event, 'linehaul')">Line Haul</div>
+                <div class="tab" onclick="openTab(event, 'pandd')">Recolección y Entrega</div>
+                <div class="tab" onclick="openTab(event, 'dock')">Operaciones de Muelle</div>
+            </div>
+            
+            <div id="overview" class="tab-content active">
+                <div class="chart-container">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+                
+                <div class="cost-breakdown">
+                    <div class="cost-card">
+                        <h3><i class="fas fa-users"></i> Gastos SG&A</h3>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Porcentaje de Ingresos</span>
+                                <span>11.0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 11%;">11%</div>
+                            </div>
+                        </div>
+                        <div class="cost-item">
+                            <span>Costo Total</span>
+                            <span class="cost-value">$645.0M</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cost-card">
+                        <h3><i class="fas fa-truck"></i> Costo del Servicio</h3>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Porcentaje de Gastos</span>
+                                <span>84.7%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 84.7%;">84.7%</div>
+                            </div>
+                        </div>
+                        <div class="cost-item">
+                            <span>Costo Total</span>
+                            <span class="cost-value">$3,578.5M</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="linehaul" class="tab-content">
+                <h3>Operaciones de Larga Distancia (Line Haul) - 48% del Costo del Servicio</h3>
+                <div class="chart-container small">
+                    <canvas id="linehaulChart"></canvas>
+                </div>
+                
+                <div class="cost-card">
+                    <h3><i class="fas fa-road"></i> Desglose de Costos - Line Haul</h3>
+                    <div class="cost-item">
+                        <span>Salarios y Beneficios - Conductores</span>
+                        <span class="cost-value">$750.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Combustible y Fluidos</span>
+                        <span class="cost-value">$580.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Mantenimiento y Neumáticos</span>
+                        <span class="cost-value">$210.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Depreciación de Flota</span>
+                        <span class="cost-value">$110.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Peajes, Licencias y Permisos</span>
+                        <span class="cost-value">$67.5M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Total</span>
+                        <span class="cost-value">$1,717.5M</span>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Porcentaje del Costo del Servicio</span>
+                        <span>48%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 48%;">48%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="pandd" class="tab-content">
+                <h3>Operaciones de Recolección y Entrega (P&D) - 35% del Costo del Servicio</h3>
+                <div class="chart-container small">
+                    <canvas id="panddChart"></canvas>
+                </div>
+                
+                <div class="cost-card">
+                    <h3><i class="fas fa-hand-holding-box"></i> Desglose de Costos - P&D</h3>
+                    <div class="cost-item">
+                        <span>Salarios y Beneficios - Conductores</span>
+                        <span class="cost-value">$680.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Combustible y Fluidos</span>
+                        <span class="cost-value">$230.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Mantenimiento y Neumáticos</span>
+                        <span class="cost-value">$190.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Depreciación de Flota</span>
+                        <span class="cost-value">$90.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Seguros y Reclamos</span>
+                        <span class="cost-value">$62.5M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Total</span>
+                        <span class="cost-value">$1,252.5M</span>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Porcentaje del Costo del Servicio</span>
+                        <span>35%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 35%;">35%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="dock" class="tab-content">
+                <h3>Operaciones de Muelle y Clasificación - 17% del Costo del Servicio</h3>
+                <div class="chart-container small">
+                    <canvas id="dockChart"></canvas>
+                </div>
+                
+                <div class="cost-card">
+                    <h3><i class="fas fa-warehouse"></i> Desglose de Costos - Muelle</h3>
+                    <div class="cost-item">
+                        <span>Salarios y Beneficios - Personal</span>
+                        <span class="cost-value">$350.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Alquiler y Gastos de Terminales</span>
+                        <span class="cost-value">$110.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Mantenimiento y Depreciación</span>
+                        <span class="cost-value">$85.0M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Supervisión y Administración</span>
+                        <span class="cost-value">$63.5M</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Total</span>
+                        <span class="cost-value">$608.5M</span>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Porcentaje del Costo del Servicio</span>
+                        <span>17%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 17%;">17%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-balance-scale"></i> Análisis Comparativo de Áreas Operativas</h2>
+                <div class="section-badge">Eficiencia Operativa</div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+            
+            <div class="image-section">
+                <div class="image-card">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Operaciones en el muelle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="image-fallback">
+                            <i class="fas fa-warehouse"></i>
+                            <h4>Operaciones en el Muelle</h4>
+                            <p>Personal gestionando mercancías en terminales</p>
+                        </div>
+                    </div>
+                    <div class="image-card-content">
+                        <h3>Operaciones en el Muelle</h3>
+                        <p>Personal altamente capacitado gestionando la clasificación y movimiento eficiente de mercancías en nuestras terminales.</p>
+                    </div>
+                </div>
+                <div class="cost-breakdown">
+                    <div class="cost-card">
+                        <h3><i class="fas fa-truck-loading"></i> Line Haul</h3>
+                        <div class="cost-item">
+                            <span>Porcentaje del Costo</span>
+                            <span class="cost-value">48%</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Principal Costo</span>
+                            <span class="cost-value">Combustible</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Desafío Principal</span>
+                            <span class="cost-value">Optimización de rutas</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cost-card">
+                        <h3><i class="fas fa-shipping-fast"></i> Recolección y Entrega</h3>
+                        <div class="cost-item">
+                            <span>Porcentaje del Costo</span>
+                            <span class="cost-value">35%</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Principal Costo</span>
+                            <span class="cost-value">Mano de obra</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Desafío Principal</span>
+                            <span class="cost-value">Productividad por hora</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cost-card">
+                        <h3><i class="fas fa-warehouse"></i> Operaciones de Muelle</h3>
+                        <div class="cost-item">
+                            <span>Porcentaje del Costo</span>
+                            <span class="cost-value">17%</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Principal Costo</span>
+                            <span class="cost-value">Personal de muelle</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Desafío Principal</span>
+                            <span class="cost-value">Eficiencia en clasificación</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="conclusion-card">
+            <h3><i class="fas fa-lightbulb"></i> Análisis y Conclusiones</h3>
+            <p>El desglose del presupuesto operativo de Old Dominion Freight Line demuestra una operación altamente eficiente con un ratio operativo del 72%, uno de los mejores en la industria del transporte LTL.</p>
+            
+            <ul class="conclusion-points">
+                <li><strong>Eficiencia de Combustible:</strong> Estrategias de compra y optimización de rutas en las operaciones de Line Haul permiten controlar el mayor costo individual.</li>
+                <li><strong>Productividad de la Mano de Obra:</strong> Optimización de rutas de P&D para maximizar entregas por hora y eficiencia en la clasificación en el Muelle.</li>
+                <li><strong>Gestión del Mantenimiento:</strong> Un programa proactivo reduce tiempos de inactividad y costos a largo plazo en toda la flota.</li>
+                <li><strong>Estructura de Costos:</strong> La distribución de gastos refleja una operación balanceada donde ninguna área funcional supera el 50% del costo total.</li>
+                <li><strong>Control de SG&A:</strong> Mantener gastos generales en solo el 11% de los ingresos contribuye significativamente a la rentabilidad.</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Old Dominion Freight Line | Informe Financiero Basado en Datos Públicos de 2024</p>
+        </div>
+    </footer>
+
+    <script>
+        // Configuración global de Chart.js
+        Chart.defaults.font.family = "'Montserrat', sans-serif";
+        Chart.defaults.color = '#333';
+        
+        // Gráfico de Ingresos vs Gastos
+        const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+        const incomeChart = new Chart(incomeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Ingresos', 'Gastos Operativos', 'Utilidad Operativa', 'Utilidad Neta'],
+                datasets: [{
+                    label: 'Millones de USD',
+                    data: [5866, 4223.5, 1642.5, 1238.7],
+                    backgroundColor: [
+                        'rgba(0, 100, 0, 0.7)',
+                        'rgba(255, 102, 0, 0.7)',
+                        'rgba(0, 150, 0, 0.7)',
+                        'rgba(0, 200, 0, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 100, 0, 1)',
+                        'rgba(255, 102, 0, 1)',
+                        'rgba(0, 150, 0, 1)',
+                        'rgba(0, 200, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `$${context.raw}M (${(context.raw / 5866 * 100).toFixed(1)}%)`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Estado de Resultados (Millones USD)',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value + 'M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico de Márgenes de Utilidad
+        const profitMarginCtx = document.getElementById('profitMarginChart').getContext('2d');
+        const profitMarginChart = new Chart(profitMarginCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Utilidad Operativa (28%)', 'Gastos Operativos (72%)'],
+                datasets: [{
+                    data: [28, 72],
+                    backgroundColor: [
+                        'rgba(0, 150, 0, 0.7)',
+                        'rgba(255, 102, 0, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 150, 0, 1)',
+                        'rgba(255, 102, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: $${(context.raw / 100 * 5866).toFixed(1)}M`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribución de Ingresos',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico de Métricas de Servicio
+        const serviceMetricsCtx = document.getElementById('serviceMetricsChart').getContext('2d');
+        const serviceMetricsChart = new Chart(serviceMetricsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Centros de Servicio', 'Tasa de Entrega a Tiempo', 'Tasa de Reclamos'],
+                datasets: [{
+                    label: 'Métrica',
+                    data: [261, 99.4, 0.1],
+                    backgroundColor: [
+                        'rgba(0, 100, 0, 0.7)',
+                        'rgba(0, 150, 0, 0.7)',
+                        'rgba(255, 102, 0, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 100, 0, 1)',
+                        'rgba(0, 150, 0, 1)',
+                        'rgba(255, 102, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.x !== null) {
+                                    if (context.dataIndex === 0) {
+                                        label += context.parsed.x;
+                                    } else {
+                                        label += context.parsed.x + '%';
+                                    }
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Métricas Clave de Servicio',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        
+        // Gráfico de Desglose de Gastos
+        const expenseCtx = document.getElementById('expenseChart').getContext('2d');
+        const expenseChart = new Chart(expenseCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Line Haul (48%)', 'P&D (35%)', 'Muelle (17%)'],
+                datasets: [{
+                    data: [1717.5, 1252.5, 608.5],
+                    backgroundColor: [
+                        'rgba(0, 100, 0, 0.7)',
+                        'rgba(0, 150, 0, 0.7)',
+                        'rgba(0, 200, 0, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 100, 0, 1)',
+                        'rgba(0, 150, 0, 1)',
+                        'rgba(0, 200, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: $${context.raw}M`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribución del Costo del Servicio',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico de Line Haul
+        const linehaulCtx = document.getElementById('linehaulChart').getContext('2d');
+        const linehaulChart = new Chart(linehaulCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Salarios', 'Combustible', 'Mantenimiento', 'Depreciación', 'Otros'],
+                datasets: [{
+                    data: [750, 580, 210, 110, 67.5],
+                    backgroundColor: [
+                        'rgba(0, 100, 0, 0.7)',
+                        'rgba(0, 150, 0, 0.7)',
+                        'rgba(0, 200, 0, 0.7)',
+                        'rgba(255, 102, 0, 0.7)',
+                        'rgba(0, 51, 102, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 100, 0, 1)',
+                        'rgba(0, 150, 0, 1)',
+                        'rgba(0, 200, 0, 1)',
+                        'rgba(255, 102, 0, 1)',
+                        'rgba(0, 51, 102, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: $${context.raw}M (${(context.raw / 1717.5 * 100).toFixed(1)}%)`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Desglose de Costos - Line Haul',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico de P&D
+        const panddCtx = document.getElementById('panddChart').getContext('2d');
+        const panddChart = new Chart(panddCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Salarios', 'Combustible', 'Mantenimiento', 'Depreciación', 'Seguros'],
+                datasets: [{
+                    data: [680, 230, 190, 90, 62.5],
+                    backgroundColor: [
+                        'rgba(0, 100, 0, 0.7)',
+                        'rgba(0, 150, 0, 0.7)',
+                        'rgba(0, 200, 0, 0.7)',
+                        'rgba(255, 102, 0, 0.7)',
+                        'rgba(0, 51, 102, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 100, 0, 1)',
+                        'rgba(0, 150, 0, 1)',
+                        'rgba(0, 200, 0, 1)',
+                        'rgba(255, 102, 0, 1)',
+                        'rgba(0, 51, 102, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: $${context.raw}M (${(context.raw / 1252.5 * 100).toFixed(1)}%)`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Desglose de Costos - P&D',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico de Muelle
+        const dockCtx = document.getElementById('dockChart').getContext('2d');
+        const dockChart = new Chart(dockCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Salarios', 'Terminales', 'Mantenimiento', 'Administración'],
+                datasets: [{
+                    data: [350, 110, 85, 63.5],
+                    backgroundColor: [
+                        'rgba(0, 100, 0, 0.7)',
+                        'rgba(0, 150, 0, 0.7)',
+                        'rgba(0, 200, 0, 0.7)',
+                        'rgba(255, 102, 0, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 100, 0, 1)',
+                        'rgba(0, 150, 0, 1)',
+                        'rgba(0, 200, 0, 1)',
+                        'rgba(255, 102, 0, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: $${context.raw}M (${(context.raw / 608.5 * 100).toFixed(1)}%)`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Desglose de Costos - Muelle',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico Comparativo
+        const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+        const comparisonChart = new Chart(comparisonCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Costo Total', 'Salarios', 'Combustible', 'Mantenimiento', 'Depreciación', 'Otros'],
+                datasets: [
+                    {
+                        label: 'Line Haul',
+                        data: [1717.5, 750, 580, 210, 110, 67.5],
+                        backgroundColor: 'rgba(0, 100, 0, 0.2)',
+                        borderColor: 'rgba(0, 100, 0, 1)',
+                        pointBackgroundColor: 'rgba(0, 100, 0, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(0, 100, 0, 1)'
+                    },
+                    {
+                        label: 'P&D',
+                        data: [1252.5, 680, 230, 190, 90, 62.5],
+                        backgroundColor: 'rgba(0, 150, 0, 0.2)',
+                        borderColor: 'rgba(0, 150, 0, 1)',
+                        pointBackgroundColor: 'rgba(0, 150, 0, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(0, 150, 0, 1)'
+                    },
+                    {
+                        label: 'Muelle',
+                        data: [608.5, 350, 0, 85, 0, 173.5],
+                        backgroundColor: 'rgba(0, 200, 0, 0.2)',
+                        borderColor: 'rgba(0, 200, 0, 1)',
+                        pointBackgroundColor: 'rgba(0, 200, 0, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(0, 200, 0, 1)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value + 'M';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: $${context.raw}M`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Comparación de Costos por Área Operativa',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Función para cambiar tabs
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabs;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            tabs = document.getElementsByClassName("tab");
+            for (i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Animación de elementos al hacer scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.section, .hero, .conclusion-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
